@@ -1,0 +1,21 @@
+{% extends "EduSisBundle::layout.html.twig" %}
+
+{% block content %}
+    {% if( user == 'anon.' or user is empty) %}
+
+            {% render url('fos_user_security_login') %}
+
+    {% else %}
+
+            {% if is_granted('ROLE_ADMIN') %}
+                welcome, {{ user.username }} | Status: Admin
+            {% elseif(user.isTeacher) %}
+                welcome, {{ user.username }} | Status: Teacher
+            {% else %}
+                welcome, {{ user.username }} | Status: Student
+            {% endif %}
+
+    {% endif %}
+
+{% endblock content %}
+

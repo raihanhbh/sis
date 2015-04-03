@@ -1,0 +1,15 @@
+edu_sis_homepage:
+    path:     /
+    defaults: { _controller: EduSisBundle:Default:index }
+
+edu_sis_about:
+    path: /about
+    defaults: {_controller: EduSisBundle:Default:about}
+
+edu_sis_admin:
+    path: /admin
+    defaults: {_controller: EduSisBundle:Default:admin}
+
+edu_sis_add_course:
+    path: /admin/addcourse
+    defaults: {_controller: EduSisBundle:Default:addCourse}

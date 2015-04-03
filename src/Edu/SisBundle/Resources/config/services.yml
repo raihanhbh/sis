@@ -1,0 +1,36 @@
+#services:
+#    edu_sis.example:
+#        class: Edu\SisBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+parameters:
+    edu_sis_security.service.login_success_handler.class: Edu\SisBundle\Services\LoginSuccessHandler
+    edu_sis_security.service.logout_success_handler.class: Edu\SisBundle\Services\LogoutSuccessHandler
+
+services:
+    edu_user.registration.form.type:
+        class: Edu\SisBundle\Form\Type\RegistrationFormType
+        tags:
+            - { name: form.type, alias: edu_user_registration }
+
+    edu_sis_security.service.login_success_handler:
+        class:  %edu_sis_security.service.login_success_handler.class%
+        arguments:  [@router, @security.context]
+        tags:
+            - { name: 'monolog.logger', channel: 'security' }
+    edu_sis_security.service.logout_success_handler:
+        class:  %edu_sis_security.service.logout_success_handler.class%
+        arguments:  [@router]
+        tags:
+            - { name: 'monolog.logger', channel: 'security' }
+
+    edu_sis.registration_listener:
+        class: Edu\SisBundle\EventListener\RegistrationListener
+        arguments: [@service_container]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    edu_sis_add_course_form_type:
+        class: Edu\SisBundle\Form\Type\AddCourseFormType
+        tags:
+            - { name: form.type, alias: edu_sis_add_course }

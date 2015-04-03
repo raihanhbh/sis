@@ -1,0 +1,11 @@
+{% extends "EduSisBundle::layout.html.twig" %}
+
+{% block content %}
+
+    <form action="{{ path('edu_sis_add_course') }}" {{ form_enctype(form) }} method="POST" class="">
+        {{ form_widget(form) }}
+
+    </form>
+
+{% endblock content %}
+

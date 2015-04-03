@@ -1,0 +1,25 @@
+{% extends "EduSisBundle::layout.html.twig" %}
+
+{% block content %}
+    {% if( user == 'anon.' or user is empty) %}
+
+        {% render url('fos_user_security_login') %}
+
+    {% else %}
+
+        {% if is_granted('ROLE_ADMIN') %}
+            welcome, {{ user.username }} | Status: Admin
+            {% include 'EduSisBundle:Default:user_list.html.twig' with {'users' : users} %}
+        {% elseif(user.isTeacher) %}
+            welcome, {{ user.username }} | Status: Teacher
+            {% include 'EduSisBundle:Default:course_list.html.twig' with {'users' : users} %}
+        {% else %}
+            welcome, {{ user.username }} | Status: Student
+        {% endif %}
+
+
+
+    {% endif %}
+
+{% endblock content %}
+

@@ -1,0 +1,6 @@
+<h1>Course List</h1>
+<ul>
+    {% for course in courses %}
+        <li>{{ course.cname|e }}</li>
+    {% endfor %}
+</ul>
