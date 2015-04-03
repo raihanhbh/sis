@@ -30,7 +30,22 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    edu_sis.form.task:
+        factory_method: createNamed
+        factory_service: form.factory
+        class: Symfony\Component\Form\Form
+        arguments:
+            - add_course_form                        # name of the form
+            - edu_sis_add_course                             # alias of the form type
+
     edu_sis_add_course_form_type:
         class: Edu\SisBundle\Form\Type\AddCourseFormType
+
         tags:
             - { name: form.type, alias: edu_sis_add_course }
+
+    edu_sis.auto_listener:
+            class: Edu\SisBundle\EventListener\AutoListener
+            arguments: [@service_container]
+            tags:
+                - { name: kernel.event_subscriber }

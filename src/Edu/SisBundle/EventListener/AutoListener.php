@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 /**
  * Listener responsible for adding the default user role at registration
  */
-class RegistrationListener implements EventSubscriberInterface
+class AutoListener implements EventSubscriberInterface
 {
   private $container;
 
@@ -33,6 +33,7 @@ class RegistrationListener implements EventSubscriberInterface
 
   public function onRegistrationSuccess(FormEvent $event)
   {
+    echo "ami ekhane"; die;
     $doctrine = $this->container->get('doctrine');
     $em = $doctrine->getManager();
 

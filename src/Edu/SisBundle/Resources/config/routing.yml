@@ -13,3 +13,7 @@ edu_sis_admin:
 edu_sis_add_course:
     path: /admin/addcourse
     defaults: {_controller: EduSisBundle:Default:addCourse}
+
+edu_sis_course_list:
+    path: /admin/courselist
+    defaults: {_controller: EduSisBundle:Default:courseList}

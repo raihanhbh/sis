@@ -44,33 +44,44 @@ class DefaultController extends Controller
     public function addCourseAction(Request $request)
     {
       $user = $this->get('security.context')->getToken()->getUser();
-
-      //$form = $this->createForm(new AddCourseFormType());
       $course = new Course();
-      $course->setCName('Write a blog post');
-      $course->setCDescription('This is a description');
 
-      $form = $this->createFormBuilder($course)
-        ->add('cname', 'text')
-        ->add('cdescription', 'text')
-        ->add('save', 'submit', array('label' => 'Add Course'))
-        ->getForm();
+      $form = $this->get('edu_sis.form.task');
+
+//      $course = new Course();
+//      $course->setCName('Write a blog post');
+//      $course->setCDescription('This is a description');
+//
+//      $form = $this->createFormBuilder($course)
+//        ->add('cname', 'text')
+//        ->add('cdescription', 'text')
+//        ->add('save', 'submit', array('label' => 'Add Course'))
+//        ->getForm();
 
       $form->handleRequest($request);
 
       if ($form->isValid()) {
 
         $em = $this->getDoctrine()->getManager();
-
-        $course = $form->getData();
+        $data = $form->getData();
+        $course->setCName($data['cName']);
+        $course->setCDescription($data['cDescription']);
         $course->setTId($user);
-//        $course->setCName('Write a blog post');
-//        $course->setCDescription('This is a description');
         $em->persist($course);
         $em->flush();
       }
       return $this->render(
         'EduSisBundle:default:add_course.html.twig', array('user' => $user, 'form' => $form->createView())
+      );
+    }
+
+    public function courseListAction(Request $request)
+    {
+      //$user = $this->get('security.context')->getToken()->getUser();
+      $courses = $this->getDoctrine()->getRepository('EduSisBundle:Course')->findAll();
+
+      return $this->render(
+        'EduSisBundle:default:course_list.html.twig', array('courses' => $courses)
       );
     }
 }
